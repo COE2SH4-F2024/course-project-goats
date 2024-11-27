@@ -51,7 +51,7 @@ Food::~Food()//destructor
     delete[] foodPos;
 }
 
-void Food::generateFood(objPos blockOff,int getx, int gety) // i added 2 more inputs because i couldnt call the game mechanics getter
+void Food::generateFood(objPos blockOff,int getx, int gety)
 {
     srand(time(NULL));
     int open[getx][gety]={0}; // list of open spots
