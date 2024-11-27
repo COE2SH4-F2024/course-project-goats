@@ -51,17 +51,14 @@ void Initialize(void)
 
 void GetInput(void)
 {
-    if (MacUILib_hasChar())
-    {
-        myGM->getInput();
-    }    
-
+    //gets input from method in games mech
+    myGM->collectAsyncInput();
 }
 
 void RunLogic(void)
 {
     myPlayer->updatePlayerDir();
-    
+
     myPlayer->movePlayer();
 }
 

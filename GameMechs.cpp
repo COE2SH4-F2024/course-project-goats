@@ -38,14 +38,24 @@ bool GameMechs::getLoseFlagStatus() const
 {
     return loseFlag;
 }
-    
 
-char GameMechs::getInput()
+void GameMechs :: collectAsyncInput()
 {
     if (MacUILib_hasChar())
     {
         input = MacUILib_getChar();
     }  
+    
+    if (input == '\e')
+    {
+        setExitTrue();
+    }
+}
+    
+
+char GameMechs::getInput()
+{
+    
 
     return input;
 
@@ -53,7 +63,7 @@ char GameMechs::getInput()
 
 int GameMechs::getScore() const
 {
-
+    return score;
 }
 
 void GameMechs::incrementScore()
@@ -79,7 +89,7 @@ void GameMechs::setExitTrue()
 
 void GameMechs::setLoseFlag()
 {
-    
+    loseFlag = true;
 }
 
 void GameMechs::setInput(char this_input)
@@ -89,7 +99,7 @@ void GameMechs::setInput(char this_input)
 
 void GameMechs::clearInput()
 {
-
+    input = 0;
 }
 
 // More methods should be added here

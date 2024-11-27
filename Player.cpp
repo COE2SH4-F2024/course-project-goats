@@ -32,6 +32,8 @@ void Player::updatePlayerDir()
         // PPA3 input processing logic   
     char input = mainGameMechsRef -> getInput();
 
+    mainGameMechsRef ->clearInput();
+
     switch(input)
     {                      
         case 'W':
@@ -77,30 +79,35 @@ void Player::movePlayer()
         case LEFT:
         default:
             playerPos.pos->x--;
+            if (playerPos.pos->x < 1)
+                playerPos.pos->x=18;
+            
             break;
 
         case RIGHT:
             playerPos.pos->x++;
+            if (playerPos.pos->x > 18)
+                playerPos.pos->x=1;
             break;
         
         case UP:
             playerPos.pos->y--;
+            if (playerPos.pos->y < 1)
+                playerPos.pos->y =8;
             break;
         
         case DOWN:
             playerPos.pos->y++;
+            if (playerPos.pos->y  > 8)
+                playerPos.pos->y =1;
             break;     
     }
 
-    if (playerPos.pos->y < 1)
-        playerPos.pos->y =8;
-    if (playerPos.pos->y  > 8)
-        playerPos.pos->y =1;
+    
+    
 
-    if (playerPos.pos->x < 1)
-        playerPos.pos->x=18;
-    if (playerPos.pos->x > 18)
-        playerPos.pos->x=1;
+    
+   
 }
 
 // More methods to be added
