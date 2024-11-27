@@ -21,6 +21,7 @@ class GameMechs
         int boardSizeY;
 
         objPos food;
+        //objPos foodPos;
 
     public:
         GameMechs();
@@ -44,6 +45,9 @@ class GameMechs
         
         // More methods should be added here
         void collectAsyncInput();
+
+        //void generateFood(objPos blockOff);
+        //objPos getFoodPos() const;
 };
 
 #endif
