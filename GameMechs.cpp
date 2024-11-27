@@ -23,11 +23,33 @@ GameMechs::GameMechs(int boardX, int boardY)
     boardSizeY = boardY;
 }
 
-// do you need a destructor?
+// do you need a destructor? nah
 GameMechs::~GameMechs()
 {
-    
+
 }
+
+GameMechs::GameMechs(const GameMechs &g){//copy 
+    input=0;
+    exitFlag=false;
+    loseFlag=false;
+    score=0;
+    boardSizeX=g.boardSizeX;
+    boardSizeY=g.boardSizeY;
+}
+
+GameMechs& GameMechs::operator=(const GameMechs &g){//copy assignment
+    if (this!=&g){
+        this->input=0;
+        this->exitFlag=false;
+        this->loseFlag=false;
+        this->score=0;
+        this->boardSizeX=g.boardSizeX;
+        this->boardSizeY=g.boardSizeY;
+    }
+    return *this;
+}
+
 
 bool GameMechs::getExitFlagStatus() const
 {
@@ -56,7 +78,7 @@ void GameMechs :: collectAsyncInput()
 char GameMechs::getInput()
 {
     
-
+    
     return input;
 
 }
@@ -66,9 +88,9 @@ int GameMechs::getScore() const
     return score;
 }
 
-void GameMechs::incrementScore()
+void GameMechs::incrementScore(int inc)//how many points shouuld be incremented
 {
-    
+    score+=inc;
 }
 
 int GameMechs::getBoardSizeX() const
@@ -94,7 +116,7 @@ void GameMechs::setLoseFlag()
 
 void GameMechs::setInput(char this_input)
 {
-
+    input=this_input;
 }
 
 void GameMechs::clearInput()
