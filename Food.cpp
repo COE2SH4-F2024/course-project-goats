@@ -6,7 +6,7 @@
 
 #include "objPos.h"
 #include "objPosArrayList.h"
-#define CAP 5
+#define FOODNUUM 5
 
 using namespace std;
 
@@ -26,20 +26,20 @@ class Food
 
 Food::Food()//default constructor
 {
-    foodPos= new objPos[CAP];
+    foodPos= new objPos[FOODNUUM];
 }
 
 Food::Food(const Food &f){// copy constructor
-    foodPos= new objPos[CAP];
-    for (int i=0;i<CAP;i++){//deep copy
+    foodPos= new objPos[FOODNUUM];
+    for (int i=0;i<FOODNUUM;i++){//deep copy
         foodPos[i]=f.foodPos[i];
     }
 }
 
 Food& Food::operator=(const Food &f){//copy assignment constructor
     if (this!=&f){
-        this->foodPos=new objPos[CAP]; 
-        for (int i=0;i<CAP;i++){//deep copy
+        this->foodPos=new objPos[FOODNUUM]; 
+        for (int i=0;i<FOODNUUM;i++){//deep copy
             this->foodPos[i]=f.foodPos[i];
         }
     }
@@ -56,7 +56,7 @@ void Food::generateFood(objPos blockOff,int getx, int gety)
     srand(time(NULL));
     int open[getx][gety]={0}; // list of open spots
     open[blockOff.pos->x][blockOff.pos->y]=1; // do not spawn on player
-    for (int i=0; i<CAP; i++){
+    for (int i=0; i<FOODNUUM; i++){
         do{ // got to make a random variable before checking
             int chance = rand()%20;//bonus variable
             foodPos[i].pos->x=(rand()%(getx-2)+1);//doesnt include border
