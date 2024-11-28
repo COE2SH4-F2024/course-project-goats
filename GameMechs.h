@@ -27,6 +27,9 @@ class GameMechs
         GameMechs();
         GameMechs(int boardX, int boardY);
         ~GameMechs(); // is this one needed at all? Why or why not?
+        GameMechs(const GameMechs &g); //copy
+        GameMechs& operator=(const GameMechs &g); // copy assignment
+        
         
         bool getExitFlagStatus() const; 
         void setExitTrue();
@@ -41,7 +44,7 @@ class GameMechs
         int getBoardSizeY() const;
         
         int getScore() const;
-        void incrementScore();
+        void incrementScore(int inc);
         
         // More methods should be added here
         void collectAsyncInput();
