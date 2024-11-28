@@ -21,6 +21,8 @@ GameMechs::GameMechs(int boardX, int boardY)
 
     boardSizeX = boardX;
     boardSizeY = boardY;
+
+    food = new Food();
 }
 
 // do you need a destructor? nah
@@ -125,3 +127,8 @@ void GameMechs::clearInput()
 }
 
 // More methods should be added here
+
+Food* GameMechs::getFoodPos() const
+{
+    return food;
+}

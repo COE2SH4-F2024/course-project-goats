@@ -9,9 +9,14 @@ Player::Player(GameMechs* thisGMRef)
     myDir = STOP;
 
     // more actions to be included
+    playerPosList = new objPosArrayList();
+
+    /*
     playerPos.pos->x = mainGameMechsRef->getBoardSizeX()/2;
     playerPos.pos->y = mainGameMechsRef->getBoardSizeY()/2;
-    playerPos.symbol = '*';
+    playerPos.symbol = '*';//*/
+
+    playerPosList->insertHead(objPos(10,4,'*'));
 }
 
 
@@ -21,10 +26,10 @@ Player::~Player()
     //nothing on heap yet
 }
 
-objPos Player::getPlayerPos() const
+const objPosArrayList*  Player:: getPlayerPos()
 {
     // return the reference to the playerPos arrray list
-    return playerPos;
+    return playerPosList;
 }
 
 void Player::updatePlayerDir()
@@ -47,7 +52,6 @@ void Player::updatePlayerDir()
         case 'a':
             if (myDir != LEFT && myDir != RIGHT)
                 myDir = LEFT;
-            MacUILib_printf("left");
             break;
 
         case 'S':
@@ -73,7 +77,7 @@ void Player::movePlayer()
 {
     // PPA3 Finite State Machine logic
    // MacUILib_printf("move player called");
-    objPos currentpos = getPlayerPos();
+    objPos playerPos = playerPosList->getHeadElement();
     switch(myDir)
     {
         case LEFT:
@@ -103,6 +107,7 @@ void Player::movePlayer()
             break;     
     }
 
+    playerPosList->insertHead(playerPos);
     
     
 

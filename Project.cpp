@@ -43,7 +43,8 @@ void Initialize(void)
     MacUILib_init();
     MacUILib_clearScreen();
 
-    myGM = new GameMechs();
+
+    myGM = new GameMechs(20,10);
 
     myPlayer = new Player (myGM);
 
@@ -66,9 +67,15 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();   
 
-    objPos playerPos = myPlayer->getPlayerPos();
+    objPos playerPos = myPlayer->getPlayerPos()->getHeadElement();
 
     int i,j;
+
+    int boardX = myGM->getBoardSizeX();
+    int boardY = myGM->getBoardSizeY();
+
+    //objPos foodPos = getFoodPos();
+
     for (i=0;i<10;i++)
     {
         for (j=0;j<20;j++)
@@ -81,6 +88,10 @@ void DrawScreen(void)
                     MacUILib_printf("#");
                 else if(playerPos.pos->x == j && playerPos.pos->y == i)
                     MacUILib_printf("%c", playerPos.symbol);
+                else if (j == myGM->getFoodPos()->getFoodPos()->getElement(i).pos->x && i == myGM->getFoodPos()->getFoodPos()->getElement(i).pos->y)
+                {
+                    MacUILib_printf("%c", myGM->getFoodPos()->getFoodPos()->getElement(i).getSymbol());
+                }
                 else
                     MacUILib_printf(" ");
             }
@@ -88,10 +99,11 @@ void DrawScreen(void)
         MacUILib_printf("\n");
     } 
 
-    MacUILib_printf("%c\n", playerPos.symbol);
+    MacUILib_printf("%c ", playerPos.symbol);
 
-    MacUILib_printf("%d\n", (myPlayer->getPlayerPos().pos->x));
-    MacUILib_printf("%d\n", (myPlayer->getPlayerPos().pos->y));
+    MacUILib_printf("%d ", (myPlayer->getPlayerPos()->getElement(0).pos->x));
+    MacUILib_printf("%d\n", (myPlayer->getPlayerPos()->getElement(0).pos->y));
+    MacUILib_printf("%d\n", boardX);
 }
 
 void LoopDelay(void)

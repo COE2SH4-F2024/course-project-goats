@@ -1,36 +1,23 @@
-#ifndef GAMEMECHS_H
-#define GAMEMECHS_H
-
+#include "Food.h"
+#include <ctime>
 #include <cstdlib>
-#include <time.h>
-
-#include "objPos.h"
-#include "objPosArrayList.h"
-#define FOODNUUM 5
-
+#include <iostream>
 using namespace std;
 
-class Food
-{
-    private:
-        objPos* foodPos;
-    
-    public:
-        Food();
-        ~Food();
-        Food(const Food &f);
-        Food& operator=(const Food &f);
-        void generateFood(objPos blockOff, int getx, int gety);
-        objPos getFoodPos() const;
-};
 
 Food::Food()//default constructor
 {
-    foodPos= new objPos[FOODNUUM];
+    foodPos= new objPosArrayList[FOODNUUM];
+
+    for(int i=0; i<FOODNUUM; i++) {
+        objPos foodPosition(5, i+3, '$');
+        foodPos->insertHead(foodPosition);
+    }
+
 }
 
 Food::Food(const Food &f){// copy constructor
-    foodPos= new objPos[FOODNUUM];
+    foodPos= new objPosArrayList[FOODNUUM];
     for (int i=0;i<FOODNUUM;i++){//deep copy
         foodPos[i]=f.foodPos[i];
     }
@@ -38,7 +25,7 @@ Food::Food(const Food &f){// copy constructor
 
 Food& Food::operator=(const Food &f){//copy assignment constructor
     if (this!=&f){
-        this->foodPos=new objPos[FOODNUUM]; 
+        this->foodPos=new objPosArrayList[FOODNUUM]; 
         for (int i=0;i<FOODNUUM;i++){//deep copy
             this->foodPos[i]=f.foodPos[i];
         }
@@ -55,25 +42,34 @@ void Food::generateFood(objPos blockOff,int getx, int gety)
 {
     srand(time(NULL));
     int open[getx][gety]={0}; // list of open spots
+
     open[blockOff.pos->x][blockOff.pos->y]=1; // do not spawn on player NOT SURE IF WORKS
     for (int i=0; i<FOODNUUM; i++){
         do{ // got to make a random variable before checking
             int chance = rand()%20;//bonus variable
-            foodPos[i].pos->x=(rand()%(getx-2)+1);//doesnt include border
-            foodPos[i].pos->y=(rand()%(gety-2)+1);
+            
+            int randXPos = (rand()%(getx-2)+1);
+            int randYPos = (rand()%(gety-2)+1);
+
+            foodPos->getElement(i).pos->x=randXPos;//doesnt include border
+            foodPos->getElement(i).pos->y=randYPos;
             if (chance==0){// 5% chance
-                foodPos[i].symbol='@'; 
+                //foodPos[i]->symbol='@'; 
+                objPos foodPosition(randXPos, randYPos, '@');
+                foodPos->removeHead();
+                foodPos->insertTail(foodPosition);
             }else{ // normal
-                foodPos[i].symbol='$';  
+                //foodPos[i].symbol='$';  
+                objPos foodPosition(randXPos, randYPos, '$');
+                foodPos->removeHead();
+                foodPos->insertTail(foodPosition);
             }
-        }while(open[foodPos[i].pos->x][foodPos[i].pos->y]!=0);//if its taken then keep redoing
-        open[foodPos[i].pos->x][foodPos[i].pos->y]=1;
+        }while(open[foodPos->getElement(i).pos->x][foodPos->getElement(i).pos->y]!=0);//if its taken then keep redoing
+        open[foodPos->getElement(i).pos->x][foodPos->getElement(i).pos->y]=1;
     }
 }
 
-objPos Food::getFoodPos() const
+objPosArrayList* Food::getFoodPos() const
 {
-    return *foodPos; // idk if this is what its asking for
+    return foodPos; // idk if this is what its asking for
 }
-
-#endif

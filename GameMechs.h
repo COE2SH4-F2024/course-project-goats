@@ -1,11 +1,10 @@
 #ifndef GAMEMECHS_H
 #define GAMEMECHS_H
 
-#include <cstdlib>
-#include <time.h>
 
 #include "objPos.h"
 #include "objPosArrayList.h"
+#include "Food.h"
 
 using namespace std;
 
@@ -20,7 +19,7 @@ class GameMechs
         int boardSizeX;
         int boardSizeY;
 
-        objPos food;
+        Food* food;
         //objPos foodPos;
 
     public:
@@ -50,7 +49,7 @@ class GameMechs
         void collectAsyncInput();
 
         //void generateFood(objPos blockOff);
-        //objPos getFoodPos() const;
+        Food* getFoodPos() const;
 };
 
 #endif

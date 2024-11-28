@@ -1,5 +1,4 @@
 #include "objPosArrayList.h"
-#include <iostream>
 
 // Paste your Tested implementation here.
 // Paste your Tested implementation here.
@@ -11,6 +10,11 @@ objPosArrayList:: objPosArrayList()
     arrayCapacity = ARRAY_MAX_CAP;
 
     aList = new objPos[arrayCapacity];
+
+    for(int i = 0; i < ARRAY_MAX_CAP - 1; i++)
+    {
+        aList[i] = objPos();
+    }
 }
 objPosArrayList::objPosArrayList(const objPosArrayList &o){//copy
     arrayCapacity=ARRAY_MAX_CAP;
@@ -73,27 +77,15 @@ void objPosArrayList::removeTail()
         
 objPos objPosArrayList::getHeadElement() const
 {
-    if (listSize < 0) 
-    {
-        throw std::out_of_range("List is empty.");
-    }
     return aList[0];
 }
 
 objPos objPosArrayList::getTailElement() const
 {
-    if (listSize < 0) 
-    {
-        throw std::out_of_range("List is empty.");
-    }
     return aList[listSize-1];
 }
 
 objPos objPosArrayList::getElement(int index) const
 {
-    if (index < 0 || index >= listSize) 
-    {
-        throw std::out_of_range("Index out of bounds.");
-    }
     return aList[index];
 }
