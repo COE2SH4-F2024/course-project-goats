@@ -48,6 +48,8 @@ void Initialize(void)
 
     myPlayer = new Player (myGM);
 
+    myGM->getFoods()->generateFood(myPlayer->getPlayerPos(), 20, 10);
+
 }
 
 void GetInput(void)
@@ -88,9 +90,9 @@ void DrawScreen(void)
                     MacUILib_printf("#");
                 else if(playerPos.pos->x == j && playerPos.pos->y == i)
                     MacUILib_printf("%c", playerPos.symbol);
-                else if (j == myGM->getFoodPos()->getFoodPos()->getElement(i).pos->x && i == myGM->getFoodPos()->getFoodPos()->getElement(i).pos->y)
+                else if (j == myGM->getFoods()->getFoodPos()->getElement(i).pos->x && i == myGM->getFoods()->getFoodPos()->getElement(i).pos->y)
                 {
-                    MacUILib_printf("%c", myGM->getFoodPos()->getFoodPos()->getElement(i).getSymbol());
+                    MacUILib_printf("%c", myGM->getFoods()->getFoodPos()->getElement(i).getSymbol());
                 }
                 else
                     MacUILib_printf(" ");

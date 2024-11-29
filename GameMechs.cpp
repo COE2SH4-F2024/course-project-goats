@@ -128,7 +128,7 @@ void GameMechs::clearInput()
 
 // More methods should be added here
 
-Food* GameMechs::getFoodPos() const
+Food* GameMechs::getFoods() const
 {
     return food;
 }

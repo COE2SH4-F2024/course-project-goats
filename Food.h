@@ -20,7 +20,7 @@ class Food
         ~Food();
         Food(const Food &f);
         Food& operator=(const Food &f);
-        void generateFood(objPos blockOff, int getx, int gety);
+        void generateFood(objPosArrayList* blockOff, int getx, int gety);
         objPosArrayList* getFoodPos() const;
 };
 

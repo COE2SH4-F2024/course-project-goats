@@ -26,7 +26,7 @@ Player::~Player()
     //nothing on heap yet
 }
 
-const objPosArrayList*  Player:: getPlayerPos()
+objPosArrayList*  Player:: getPlayerPos() const
 {
     // return the reference to the playerPos arrray list
     return playerPosList;

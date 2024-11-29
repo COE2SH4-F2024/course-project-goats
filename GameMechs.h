@@ -49,7 +49,7 @@ class GameMechs
         void collectAsyncInput();
 
         //void generateFood(objPos blockOff);
-        Food* getFoodPos() const;
+        Food* getFoods() const;
 };
 
 #endif

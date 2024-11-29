@@ -26,7 +26,7 @@ class Player
 
         // More methods to be added here
 
-        const objPosArrayList* getPlayerPos();
+        objPosArrayList* getPlayerPos() const;
 
     private:
         //objPos playerPos; // Upgrade this in iteration 3.    
