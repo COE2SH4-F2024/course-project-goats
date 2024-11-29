@@ -16,14 +16,16 @@ Player::Player(GameMechs* thisGMRef)
     playerPos.pos->y = mainGameMechsRef->getBoardSizeY()/2;
     playerPos.symbol = '*';//*/
 
-    playerPosList->insertHead(objPos(10,4,'*'));
+    objPos headPos(thisGMRef->getBoardSizeX()/2,thisGMRef->getBoardSizeY()/2,'*');
+
+    playerPosList->insertHead(headPos);
 }
 
 
 Player::~Player()
 {
     //delete any heap members here
-    //nothing on heap yet
+    delete playerPosList;
 }
 
 objPosArrayList*  Player:: getPlayerPos() const
@@ -84,35 +86,43 @@ void Player::movePlayer()
         default:
             playerPos.pos->x--;
             if (playerPos.pos->x < 1)
-                playerPos.pos->x=18;
+                playerPos.pos->x=mainGameMechsRef->getBoardSizeX()-2;
             
             break;
 
         case RIGHT:
             playerPos.pos->x++;
-            if (playerPos.pos->x > 18)
+            if (playerPos.pos->x > mainGameMechsRef->getBoardSizeX()-2)
                 playerPos.pos->x=1;
             break;
         
         case UP:
             playerPos.pos->y--;
             if (playerPos.pos->y < 1)
-                playerPos.pos->y =8;
+                playerPos.pos->y = mainGameMechsRef->getBoardSizeY()-2;
             break;
         
         case DOWN:
             playerPos.pos->y++;
-            if (playerPos.pos->y  > 8)
+            if (playerPos.pos->y  > mainGameMechsRef->getBoardSizeY()-2)
                 playerPos.pos->y =1;
             break;     
     }
 
     playerPosList->insertHead(playerPos);
+    playerPosList->removeTail();
     
     
+    //check if new temp obj overlaps food pos 
 
-    
+
+    //checking overlap and use isPosEqual
    
+
+   //if overlapped, food consumed, do not remove snake tail
+   //take respective action to add to score
+
+   //if no overlap, remove tail, complete movement
 }
 
 // More methods to be added

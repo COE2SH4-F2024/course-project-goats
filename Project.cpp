@@ -69,7 +69,14 @@ void DrawScreen(void)
 {
     MacUILib_clearScreen();   
 
+    objPosArrayList* snakePos = myPlayer-> getPlayerPos();
+
     objPos playerPos = myPlayer->getPlayerPos()->getHeadElement();
+
+    int snakeSize = snakePos->getSize();
+
+    bool printedSnake = false;
+    bool printedFood = false;
 
     int i,j;
 
@@ -78,25 +85,70 @@ void DrawScreen(void)
 
     //objPos foodPos = getFoodPos();
 
-    for (i=0;i<10;i++)
+    for (i=0;i<boardY;i++)
     {
-        for (j=0;j<20;j++)
+        for (j=0;j<boardX;j++)
         {
+
+            /*
             if(i==0 || i==9)
                 MacUILib_printf("#");
             else
             {
                 if (j==0||j==19)
                     MacUILib_printf("#");
-                else if(playerPos.pos->x == j && playerPos.pos->y == i)
-                    MacUILib_printf("%c", playerPos.symbol);
-                else if (j == myGM->getFoods()->getFoodPos()->getElement(i).pos->x && i == myGM->getFoods()->getFoodPos()->getElement(i).pos->y)
-                {
+
+                //dont need this anymore cuz printing full snake
+                //else if(playerPos.pos->x == j && playerPos.pos->y == i)
+                    //MacUILib_printf("%c", playerPos.symbol);
+                else if (j == myGM->getFoods()->getFoodPos()->getElement(0).pos->x && i == myGM->getFoods()->getFoodPos()->getElement(0).pos->y)
                     MacUILib_printf("%c", myGM->getFoods()->getFoodPos()->getElement(i).getSymbol());
-                }
                 else
                     MacUILib_printf(" ");
+            }*/
+
+            printedFood = false;
+            printedSnake = false;
+
+            for (int k = 0; k <snakeSize; k++)
+            {
+                
+                objPos thisSeg = snakePos -> getElement(k);
+
+                if (thisSeg.getObjPos().pos->x == j && i == thisSeg.getObjPos().pos->y)
+                    {
+                        MacUILib_printf("%c", thisSeg.getObjPos().getSymbol());
+                        printedSnake = true;
+                    }
             }
+
+            if (printedSnake)
+            {
+                continue;
+            }
+
+            for (int l = 0; l <FOODNUUM; l++)
+            {
+                
+                Food* thisFood = myGM->getFoods();
+
+                if (thisFood->getFoodPos()->getElement(l).pos->x == j && i == thisFood->getFoodPos()->getElement(l).pos->y)
+                    {
+                        MacUILib_printf("%c", thisFood->getFoodPos()->getElement(l).getSymbol());
+                        printedFood = true;
+                    }
+            }
+
+            if (printedFood)
+            {
+                continue;
+            }
+
+            if(i==0 || i == boardY-1 || j ==0 || j == boardX-1)
+                MacUILib_printf("%c", '#');
+            
+            else
+                MacUILib_printf("%c", ' ');
         }
         MacUILib_printf("\n");
     } 
@@ -106,6 +158,7 @@ void DrawScreen(void)
     MacUILib_printf("%d ", (myPlayer->getPlayerPos()->getElement(0).pos->x));
     MacUILib_printf("%d\n", (myPlayer->getPlayerPos()->getElement(0).pos->y));
     MacUILib_printf("%d\n", boardX);
+    MacUILib_printf("%c", myGM->getFoods()->getFoodPos()->getElement(0).getSymbol());
 }
 
 void LoopDelay(void)
