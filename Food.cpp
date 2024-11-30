@@ -49,7 +49,7 @@ void Food::generateFood(objPosArrayList* blockOff,int getx, int gety)
 
     for (int i=0; i<FOODNUUM; i++){
         do{ // got to make a random variable before checking
-            int chance = rand()%20;//bonus variable
+            int chance = rand()%25;//bonus variable
             
             int randXPos = (rand()%(getx-2)+1);
             int randYPos = (rand()%(gety-2)+1);
