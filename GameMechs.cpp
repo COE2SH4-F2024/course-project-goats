@@ -70,7 +70,7 @@ void GameMechs :: collectAsyncInput()
         input = MacUILib_getChar();
     }  
     
-    if (input == '\e')
+    if (input == ' ')
     {
         setExitTrue();
     }
@@ -79,10 +79,7 @@ void GameMechs :: collectAsyncInput()
 
 char GameMechs::getInput()
 {
-    
-    
     return input;
-
 }
 
 int GameMechs::getScore() const

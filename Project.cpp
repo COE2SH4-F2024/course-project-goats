@@ -25,7 +25,7 @@ int main(void)
 
     Initialize();
 
-    while(myGM -> getExitFlagStatus() == false)  
+    while(myGM -> getExitFlagStatus() == false)// && !myGM->getLoseFlagStatus())  
     {
         GetInput();
         RunLogic();
@@ -84,81 +84,79 @@ void DrawScreen(void)
     int boardY = myGM->getBoardSizeY();
 
     //objPos foodPos = getFoodPos();
-
-    for (i=0;i<boardY;i++)
+    if (!myGM->getLoseFlagStatus())
     {
-        for (j=0;j<boardX;j++)
+        for (i=0;i<boardY;i++)
         {
-
-            /*
-            if(i==0 || i==9)
-                MacUILib_printf("#");
-            else
+            for (j=0;j<boardX;j++)
             {
-                if (j==0||j==19)
-                    MacUILib_printf("#");
 
-                //dont need this anymore cuz printing full snake
-                //else if(playerPos.pos->x == j && playerPos.pos->y == i)
-                    //MacUILib_printf("%c", playerPos.symbol);
-                else if (j == myGM->getFoods()->getFoodPos()->getElement(0).pos->x && i == myGM->getFoods()->getFoodPos()->getElement(0).pos->y)
-                    MacUILib_printf("%c", myGM->getFoods()->getFoodPos()->getElement(i).getSymbol());
+                printedFood = false;
+                printedSnake = false;
+
+                for (int k = 0; k <snakeSize; k++)
+                {
+                    
+                    objPos thisSeg = snakePos -> getElement(k);
+
+                    if (thisSeg.getObjPos().pos->x == j && i == thisSeg.getObjPos().pos->y)
+                        {
+                            MacUILib_printf("%c", thisSeg.getObjPos().getSymbol());
+                            printedSnake = true;
+                        }
+                }
+
+                if (printedSnake)
+                {
+                    continue;
+                }
+
+                for (int l = 0; l <FOODNUUM; l++)
+                {
+                    
+                    Food* thisFood = myGM->getFoods();
+
+                    if (thisFood->getFoodPos()->getElement(l).pos->x == j && i == thisFood->getFoodPos()->getElement(l).pos->y)
+                        {
+                            MacUILib_printf("%c", thisFood->getFoodPos()->getElement(l).getSymbol());
+                            printedFood = true;
+                        }
+                }
+
+                if (printedFood)
+                {
+                    continue;
+                }
+
+                if(i==0 || i == boardY-1 || j ==0 || j == boardX-1)
+                    MacUILib_printf("%c", '#');
+                
                 else
-                    MacUILib_printf(" ");
-            }*/
-
-            printedFood = false;
-            printedSnake = false;
-
-            for (int k = 0; k <snakeSize; k++)
-            {
-                
-                objPos thisSeg = snakePos -> getElement(k);
-
-                if (thisSeg.getObjPos().pos->x == j && i == thisSeg.getObjPos().pos->y)
-                    {
-                        MacUILib_printf("%c", thisSeg.getObjPos().getSymbol());
-                        printedSnake = true;
-                    }
+                    MacUILib_printf("%c", ' ');
             }
+            MacUILib_printf("\n");
+        } 
 
-            if (printedSnake)
-            {
-                continue;
-            }
+        MacUILib_printf("\"%c\" ", playerPos.symbol);
 
-            for (int l = 0; l <FOODNUUM; l++)
-            {
-                
-                Food* thisFood = myGM->getFoods();
+        MacUILib_printf("[%d ", (myPlayer->getPlayerPos()->getElement(0).pos->x));
+        MacUILib_printf("%d]\n", (myPlayer->getPlayerPos()->getElement(0).pos->y));
+        MacUILib_printf("Score: %d\n", myGM->getScore());
+        /*MacUILib_printf("%d\n", boardX);
+        MacUILib_printf("%c", myGM->getFoods()->getFoodPos()->getElement(0).getSymbol());*/
+    }
+    else if (myGM->getLoseFlagStatus())
+    {
+        MacUILib_clearScreen(); 
+        MacUILib_printf("YOU LOSE\tGAME OVER\nScore: %d\nPress the Spacebar to exit", myGM->getScore());
+    }
 
-                if (thisFood->getFoodPos()->getElement(l).pos->x == j && i == thisFood->getFoodPos()->getElement(l).pos->y)
-                    {
-                        MacUILib_printf("%c", thisFood->getFoodPos()->getElement(l).getSymbol());
-                        printedFood = true;
-                    }
-            }
+    else if (myGM->getExitFlagStatus())
+    {
+        MacUILib_clearScreen(); 
+        MacUILib_printf("Game Exitted");
+    }
 
-            if (printedFood)
-            {
-                continue;
-            }
-
-            if(i==0 || i == boardY-1 || j ==0 || j == boardX-1)
-                MacUILib_printf("%c", '#');
-            
-            else
-                MacUILib_printf("%c", ' ');
-        }
-        MacUILib_printf("\n");
-    } 
-
-    MacUILib_printf("%c ", playerPos.symbol);
-
-    MacUILib_printf("%d ", (myPlayer->getPlayerPos()->getElement(0).pos->x));
-    MacUILib_printf("%d\n", (myPlayer->getPlayerPos()->getElement(0).pos->y));
-    MacUILib_printf("%d\n", boardX);
-    MacUILib_printf("%c", myGM->getFoods()->getFoodPos()->getElement(0).getSymbol());
 }
 
 void LoopDelay(void)

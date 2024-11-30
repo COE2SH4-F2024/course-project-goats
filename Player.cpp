@@ -83,7 +83,7 @@ void Player::movePlayer()
     switch(myDir)
     {
         case LEFT:
-        default:
+        
             playerPos.pos->x--;
             if (playerPos.pos->x < 1)
                 playerPos.pos->x=mainGameMechsRef->getBoardSizeX()-2;
@@ -106,23 +106,78 @@ void Player::movePlayer()
             playerPos.pos->y++;
             if (playerPos.pos->y  > mainGameMechsRef->getBoardSizeY()-2)
                 playerPos.pos->y =1;
+        default:
             break;     
     }
 
     playerPosList->insertHead(playerPos);
-    playerPosList->removeTail();
+    
     
     
     //check if new temp obj overlaps food pos 
 
 
     //checking overlap and use isPosEqual
+    if(checkEat()==1)
+        mainGameMechsRef->incrementScore(1);
+
+    else   
+        playerPosList->removeTail();
+
+    //check is snake collides with itself and show lose screen
+    if(checkCrash())
+    {
+        mainGameMechsRef->setLoseFlag();
+        myDir = STOP;
+    }
+    
    
 
    //if overlapped, food consumed, do not remove snake tail
    //take respective action to add to score
 
    //if no overlap, remove tail, complete movement
+    
+
 }
 
 // More methods to be added
+
+int Player::checkEat() 
+{
+    for (int p = 0;p<FOODNUUM;p++)
+    {
+        Food* foodCurrent = mainGameMechsRef->getFoods();
+        if (playerPosList->getHeadElement().isPosEqual(foodCurrent->getFoodPos()->getElement(p)))
+        {
+            if (foodCurrent->getFoodPos()->getElement(p).getSymbol() == '$')
+            {
+                mainGameMechsRef->getFoods()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+                return 1;
+            }
+            else if(foodCurrent->getFoodPos()->getElement(p).getSymbol() == '@')// if collides with special food
+            {
+                mainGameMechsRef->getFoods()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+              //  MacUILib_printf("Special Food");
+                mainGameMechsRef->incrementScore(5); //increment score by 5 and don't return 1 so it doesn't gain length
+                return 2;
+
+            }
+        }
+
+    }
+    return 0;
+}
+
+bool Player:: checkCrash()
+{
+    for (int i = 1; i < playerPosList->getSize(); i++)
+    {
+        if(playerPosList->getHeadElement().isPosEqual(playerPosList->getElement(i)))
+        {
+            return true;
+        }
+    }
+
+    return false;
+}
