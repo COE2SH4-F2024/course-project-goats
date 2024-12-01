@@ -73,6 +73,7 @@ void GameMechs :: collectAsyncInput()
     if (input == ' ')
     {
         setExitTrue();
+
     }
 }
     

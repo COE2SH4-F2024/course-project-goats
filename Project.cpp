@@ -7,6 +7,7 @@
 using namespace std;
 
 #define DELAY_CONST 100000
+#define TARGET 50
 
 Player* myPlayer; //global pointer to put player on heap
 GameMechs* myGM;
@@ -25,8 +26,8 @@ int main(void)
 
     Initialize();
 
-    while(myGM -> getExitFlagStatus() == false)// && !myGM->getLoseFlagStatus())  
-    {
+     
+    while(myGM -> getExitFlagStatus() == false){// && !myGM->getLoseFlagStatus()) 
         GetInput();
         RunLogic();
         DrawScreen();
@@ -84,7 +85,7 @@ void DrawScreen(void)
     int boardY = myGM->getBoardSizeY();
 
     //objPos foodPos = getFoodPos();
-    if (!myGM->getLoseFlagStatus())
+    if (!myGM->getLoseFlagStatus() && myGM->getScore()<TARGET)
     {
         for (i=0;i<boardY;i++)
         {
@@ -142,6 +143,7 @@ void DrawScreen(void)
         MacUILib_printf("[%d ", (myPlayer->getPlayerPos()->getElement(0).pos->x));
         MacUILib_printf("%d]\n", (myPlayer->getPlayerPos()->getElement(0).pos->y));
         MacUILib_printf("Score: %d\n", myGM->getScore());
+        MacUILib_printf("Obtain a score of %d to win!\n", TARGET);
         /*MacUILib_printf("%d\n", boardX);
         MacUILib_printf("%c", myGM->getFoods()->getFoodPos()->getElement(0).getSymbol());*/
     }
@@ -155,6 +157,11 @@ void DrawScreen(void)
     {
         MacUILib_clearScreen(); 
         MacUILib_printf("Game Exitted");
+    }
+    else if (myGM->getScore()>=TARGET)
+    {
+        MacUILib_clearScreen(); 
+        MacUILib_printf("YOU WIN!!!!!!!!!!\tGAME OVER\nScore: %d\nPress the Spacebar to exit", myGM->getScore());
     }
 
 }
