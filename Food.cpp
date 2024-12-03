@@ -41,10 +41,12 @@ Food::~Food()//destructor
 void Food::generateFood(objPosArrayList* blockOff,int getx, int gety)
 {
     srand(time(NULL));
-    int open[getx][gety]={0}; // list of open spots
+    int open[gety][getx]={0}; // list of open spots
 
-    for (int k = 0; k<blockOff->getSize() ; k++)    
-        open[blockOff->getElement(k).pos->x][blockOff->getElement(k).pos->y]=1; // do not spawn on player 
+    for (int i = 0; i<blockOff->getSize() ; i++)    
+    {
+        open[blockOff->getElement(i).pos->y][blockOff->getElement(i).pos->x]=1; // do not spawn on player 
+    }
 
 
     for (int i=0; i<FOODNUUM; i++){
@@ -61,14 +63,16 @@ void Food::generateFood(objPosArrayList* blockOff,int getx, int gety)
                 objPos foodPosition(randXPos, randYPos, '@');
                 foodPos->removeHead();
                 foodPos->insertTail(foodPosition);
-            }else{ // normal
+            }
+            else{ // normal
                 //foodPos[i].symbol='$';  
                 objPos foodPosition(randXPos, randYPos, '$');
                 foodPos->removeHead();
                 foodPos->insertTail(foodPosition);
             }
-        }while(open[foodPos->getElement(i).pos->x][foodPos->getElement(i).pos->y]!=0);//if its taken then keep redoing
-        open[foodPos->getElement(i).pos->x][foodPos->getElement(i).pos->y]=1;
+        }while(open[foodPos->getElement(i).pos->y][foodPos->getElement(i).pos->x]!=0);//if its taken then keep redoing
+
+        open[foodPos->getElement(i).pos->y][foodPos->getElement(i).pos->x]=1;
     }
 }
 

@@ -49,7 +49,7 @@ void Initialize(void)
 
     myPlayer = new Player (myGM);
 
-    myGM->getFoods()->generateFood(myPlayer->getPlayerPos(), 20, 10);
+    myGM->getFoods()->generateFood(myPlayer->getPlayerPos(), myGM->getBoardSizeX(), myGM->getBoardSizeY());///
 
 }
 

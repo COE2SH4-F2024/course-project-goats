@@ -28,7 +28,7 @@ GameMechs::GameMechs(int boardX, int boardY)
 // do you need a destructor? nah
 GameMechs::~GameMechs()
 {
-
+    delete food;
 }
 
 GameMechs::GameMechs(const GameMechs &g){//copy 
