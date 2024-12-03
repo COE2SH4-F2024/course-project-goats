@@ -5,7 +5,7 @@ Course Project
 You must watch the briefing video and read through the manual to engage in the development activities.
 
 
-Section: [L07 and L05]
+Section: [Lecture: C01, Labs: L07 and L05]
 
 Team Information
 Member 1 MacID: [mahidas]
