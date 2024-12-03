@@ -21,7 +21,7 @@ objPosArrayList:: objPosArrayList()
 objPosArrayList::objPosArrayList(const objPosArrayList &o)
 {
     arrayCapacity=ARRAY_MAX_CAP;
-    listSize=o.getSize();
+    this->listSize=o.getSize();
     aList= new objPos[ARRAY_MAX_CAP];
 
     for (int i = 0; i < listSize; i++){//deep copy
@@ -55,6 +55,9 @@ int objPosArrayList::getSize() const
 
 void objPosArrayList:: insertHead(objPos thisPos)
 {
+    if(listSize>=arrayCapacity) 
+        return;
+
     for(int i = listSize;i>0;i--)
         aList[i] = aList[i-1];
     
@@ -64,11 +67,17 @@ void objPosArrayList:: insertHead(objPos thisPos)
 
 void objPosArrayList::insertTail(objPos thisPos)
 {
+    if(listSize>=arrayCapacity) 
+        return;
+
     aList[listSize++] = thisPos;
 }
 
 void objPosArrayList::removeHead()
 {
+    if(listSize==0) 
+        return;
+
     for(int i=0; i<listSize-1; i++)
     {
         aList[i] = aList[i+1];  // Shifting towards the head, element i replaced by element i+1
@@ -78,6 +87,8 @@ void objPosArrayList::removeHead()
 
 void objPosArrayList::removeTail()
 {
+    if(listSize==0) 
+        return;
     listSize--;
 }
         
@@ -93,5 +104,19 @@ objPos objPosArrayList::getTailElement() const
 
 objPos objPosArrayList::getElement(int index) const
 {
+    if(listSize==0)
+    {
+        return aList[0];
+    }
+
+    else if(index<=0)
+    {
+        index = 0;
+    }
+    else if(index>listSize)
+    {
+        index=listSize-1;
+    }
+
     return aList[index];
 }

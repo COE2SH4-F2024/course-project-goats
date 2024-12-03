@@ -74,7 +74,7 @@ void DrawScreen(void)
 
     objPos playerPos = myPlayer->getPlayerPos()->getHeadElement();
 
-    int snakeSize = snakePos->getSize();
+    int snakeSize = myPlayer->getPlayerPos()->getSize();
 
     bool printedSnake = false;
     bool printedFood = false;
@@ -141,7 +141,7 @@ void DrawScreen(void)
         MacUILib_printf("\"%c\" ", playerPos.symbol);
 
         MacUILib_printf("[%d ", (myPlayer->getPlayerPos()->getElement(0).pos->x));
-        MacUILib_printf("%d]\n", (myPlayer->getPlayerPos()->getElement(0).pos->y));
+        MacUILib_printf("%d] Size: %d\n", myPlayer->getPlayerPos()->getElement(0).pos->y, snakeSize);//snakePos->getSize()));
         MacUILib_printf("Score: %d\n", myGM->getScore());
         MacUILib_printf("Obtain a score of %d to win!\n", TARGET);
         /*MacUILib_printf("%d\n", boardX);

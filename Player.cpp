@@ -118,9 +118,16 @@ void Player::movePlayer()
 
 
     //checking overlap and use isPosEqual
-    if(checkEat()!=0)
+    if(checkEat()==1)
     {
         mainGameMechsRef->incrementScore(1);
+        mainGameMechsRef->getFoods()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+    }
+
+    else if (checkEat()==2)
+    {
+        mainGameMechsRef->getFoods()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+        mainGameMechsRef->incrementScore(5); //increment score by 5
     }
 
     else   
@@ -154,14 +161,12 @@ int Player::checkEat()
         {
             if (foodCurrent->getFoodPos()->getElement(p).getSymbol() == '$')
             {
-                mainGameMechsRef->getFoods()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
+                
                 return 1;
             }
             else if(foodCurrent->getFoodPos()->getElement(p).getSymbol() == '@')// if collides with special food
             {
               //  MacUILib_printf("Special Food");
-                mainGameMechsRef->getFoods()->generateFood(playerPosList, mainGameMechsRef->getBoardSizeX(), mainGameMechsRef->getBoardSizeY());
-                mainGameMechsRef->incrementScore(5); //increment score by 5 and don't return 1 so it doesn't gain length
                 return 2;
 
             }
