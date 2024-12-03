@@ -43,14 +43,17 @@ void Food::generateFood(objPosArrayList* blockOff,int getx, int gety)
     srand(time(NULL));
     int open[gety][getx]={0}; // list of open spots
 
+    open[blockOff->getHeadElement().pos->y][blockOff->getHeadElement().pos->x]=1;
+
     for (int i = 0; i<blockOff->getSize() ; i++)    
     {
         open[blockOff->getElement(i).pos->y][blockOff->getElement(i).pos->x]=1; // do not spawn on player 
     }
 
-
     for (int i=0; i<FOODNUUM; i++){
         do{ // got to make a random variable before checking
+            
+
             int chance = rand()%25;//bonus variable
             
             int randXPos = (rand()%(getx-2)+1);
